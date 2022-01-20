@@ -3648,7 +3648,7 @@ resource "aws_db_instance" "test" {
   engine_version          = %[2]q
   instance_class          = data.aws_rds_orderable_db_instance.test.instance_class
   name                    = "baz"
-  parameter_group_name    = "default.%[1]s%[2]s"
+  parameter_group_name    = %[3]q
   password                = "barbarbarbar"
   skip_final_snapshot     = true
   username                = "foo"
@@ -3658,7 +3658,7 @@ resource "aws_db_instance" "test" {
   # validation error).
   maintenance_window = "Fri:09:00-Fri:09:30"
 }
-`, engine, engineVersion))
+`, engine, engineVersion, fmt.Sprintf("default.%s%s", engine, engineVersion)))
 }
 
 func testAccInstanceConfig_namePrefix() string {
